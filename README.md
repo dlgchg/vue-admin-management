@@ -1,24 +1,20 @@
 # vue-admin-management
+ 
+学习Vue路由在登录权限中动态配置路由选项
 
-## Project setup
-```
-npm install
-```
+在router中创建一个默认路由和一个异步路由,路由中的meta属性配置roles属性,roles中决定使用匹配使用者.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
+```json
+{
+    meta: { title: "e", roles: ["admin", "editor"] }
+}
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
+在路由导航守卫中进行权限判断,分配路由.
+根据cookie判断用户是否登录,登录后进行用户权限筛选匹配路由
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+```JavaScript
+const routes = await store.dispatch('getRoutes')
+router.addRoutes(routes)
+next({...to, replace: true})
+```
